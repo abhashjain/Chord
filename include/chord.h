@@ -5,6 +5,8 @@
 
 class Chord{
     public:
-    void add();
+    void add_node(int id);
+    void list_nodes();
+    void show_all();
 };
 #endif

@@ -2,7 +2,7 @@
 #define _CHORD_Util
 #include "node.h"
 
-map<int,Node *> db;
+map<int,Node *> chord_db;
 
 
 #endif
