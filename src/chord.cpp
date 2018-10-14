@@ -14,8 +14,6 @@ void Chord::list_nodes(){
     cout<<endl;
 }
 
-void Chord::show_all(){
-    for(auto m: chord_db){
-        
-    }
+void Chord::show_id(int id){
+    chord_db[id]->show_node();
 }
