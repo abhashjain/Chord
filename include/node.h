@@ -19,6 +19,7 @@ class Node{
     public:
         vector<finger_node> finger_table;
         int predecessor;
+        //int successor;
         int id;
         //construtor to Node class
         Node(int finger_size);
@@ -27,8 +28,11 @@ class Node{
         int notify(int id);
         int stabilize(int id);
         int fix(int id);
-        void show_node();
-        string print_finger();
+        void show_node(); //display the node details
+        string print_finger(); //print the finger table of the node
+        int find_sucessor(int id);
+        Node* closet_preceding_node(int id);
+        void join_node(int id);
 };
 
 #endif
