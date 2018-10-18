@@ -8,6 +8,7 @@
 #include<algorithm>
 #include <limits.h>
 #include <stdlib.h>
+#include<math.h>
 
 using namespace std;
 struct finger_node{
@@ -20,7 +21,7 @@ class Node{
         vector<finger_node> finger_table;
         int predecessor;
         //int successor;
-        int id;
+        int my_id;
         //construtor to Node class
         Node(int finger_size);
 

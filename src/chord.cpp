@@ -20,7 +20,7 @@ void Chord::show_id(int id){
 
 void Chord::add_node(int id,int finger_size){
     Node *newNode = new Node(finger_size);
-    newNode->id = id;
+    newNode->my_id = id;
     for(int i=0;i<newNode->finger_table.size();i++){
         newNode->finger_table[i].start = id;
         newNode->finger_table[i].interval = 0;

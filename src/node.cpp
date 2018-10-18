@@ -18,11 +18,11 @@ string Node::print_finger(){
 }
 
 void Node::show_node(){
-    cout<< "Node "<<id << ": suc "<<finger_table[0].node << ", pre " << (predecessor != -1 ? to_string(predecessor): "None") << ": finger " <<print_finger() <<endl;
+    cout<< "Node "<< my_id << ": suc "<<finger_table[0].node << ", pre " << (predecessor != -1 ? to_string(predecessor): "None") << ": finger " <<print_finger() <<endl;
 }
 
 int Node::find_sucessor(int new_id){
-    if(new_id>id && new_id <= finger_table[0].node){
+    if(new_id>my_id && new_id <= finger_table[0].node){
         return finger_table[0].node;
     } else {
         Node *n0 = chord_db[finger_table[0].node]->closet_preceding_node(new_id);
@@ -33,7 +33,7 @@ int Node::find_sucessor(int new_id){
 Node* Node::closet_preceding_node(int new_id){
     for(int i = finger_table.size()-1;i >=0;i--){
         //if last node lies in the range
-        if(finger_table[i].node > id && finger_table[i].node < new_id){
+        if(finger_table[i].node > my_id && finger_table[i].node < new_id){
             return chord_db[finger_table[i].node];
         }else { //this node is the closest precedessor
             return this;
