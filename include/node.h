@@ -33,7 +33,11 @@ class Node{
         string print_finger(); //print the finger table of the node
         int find_sucessor(int id);
         Node* closet_preceding_node(int id);
-        void join_node(int id);
+        Node* find_predecessor(int id);
+        void join_node(Node *n1);
+        void init_finger_table(Node *n1);
+        void update_others();
+        void update_finger_table(int s, int i);
 };
 
 #endif
