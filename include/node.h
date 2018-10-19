@@ -38,6 +38,7 @@ class Node{
         void init_finger_table(Node *n1);
         void update_others();
         void update_finger_table(int s, int i);
+        bool check_in_range(int,int,int);
 };
 
 #endif

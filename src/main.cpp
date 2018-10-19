@@ -3,6 +3,7 @@
 #include<sstream>
 #include<fstream>
 #include<iterator>
+#include <memory>
 
 using namespace std;
 
