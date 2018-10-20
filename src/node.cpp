@@ -1,4 +1,5 @@
 #include "node.h"
+#define SUCCESSOR finger_table[0].node; 
 
 extern map<int,Node *> chord_db;
 Node::Node(int finger_size){
@@ -21,29 +22,37 @@ void Node::show_node(){
     cout<< "Node "<< my_id << ": suc "<<finger_table[0].node << ", pre " << (predecessor != -1 ? to_string(predecessor): "None") << ": finger " <<print_finger() <<endl;
 }
 
+//Find the successor of Given Node
 int Node::find_sucessor(int new_id){
     cout<<"Inside "<<__FUNCTION__<<" for my_id " << my_id << " and looking for "<< new_id <<endl;
-    // Node *n1 = find_predecessor(new_id);
-    // return n1->finger_table[0].node;
+    if(my_id == new_id){
+        return this->my_id;
+    }
+    //When there is single node in network,because node sucessor can't be same as itself
     if(this->my_id==this->finger_table[0].node){
         return this->my_id;
     }
-    if(new_id>my_id && new_id <= finger_table[0].node){
-        return finger_table[0].node;
-    } else {
+    //New node id lies between the current node id and it's suceessor
+    if(new_id > my_id && new_id <= finger_table[0].node){
+        return SUCCESSOR;
+    } //When Successor is 0 then I handled it differently
+    else if ((finger_table[0].node == 0) && (new_id > my_id && new_id <= (int)pow(2,finger_table.size()))){
+        return SUCCESSOR;
+    }
+    else { //find next preding node to the new_id and return it's successor
         Node *n0 = chord_db[finger_table[0].node]->closet_preceding_node(new_id);
         return n0->find_sucessor(new_id);
     }
 }
-
+//this function check for round range excluding boundary
 bool Node::check_in_range(int id,int start,int end){
-    cout<<"Inside "<<__FUNCTION__<<endl;
-    if(end>start){
-        if(id>start && id<=end){
+    cout<<"Enter "<<__FUNCTION__<< ":my id " <<my_id << " id "<< id << " start " <<start <<" end " << end << endl;
+    if(end>start){  //increasing range
+        if(id>start && id<end){ //Id will be in id E (start,end)
             return true;
         }
-    } else { //need to do rollover
-        if((id>start && id<(int)pow(2,finger_table.size())) || (id>=0 && id<=end)){
+    } else { //need to do rollover 
+        if((id>start && id<(int)pow(2,finger_table.size())) || (id>=0 && id < end)){
             return true; 
         }
     }
@@ -51,43 +60,38 @@ bool Node::check_in_range(int id,int start,int end){
 }
 
 Node* Node::find_predecessor(int new_id){
-    cout<<"Inside "<<__FUNCTION__ << "doing for "<<new_id <<" myid is "<< my_id <<endl;
+    cout<<"Enter: "<<__FUNCTION__ << " predecessor for "<<new_id <<" myid is "<< my_id <<endl;
     Node* n1 = this;
-    while(!check_in_range(new_id,n1->my_id,n1->finger_table[0].node)){
-        cout<<"calling procedin node function\n";
+    int p=-1,p1;
+    while(!check_in_range(new_id,n1->my_id,n1->finger_table[0].node || new_id!= finger_table[0].node)){
         n1 = n1->closet_preceding_node(new_id);
+        cout<< __FUNCTION__ << ": closet procedeing return " << n1->my_id << " for new_id "<<new_id << " at "<< my_id <<endl;
+        p1=p;
+        p=n1->my_id;
+        if(p ==p1)
+            break;
     }
     return n1;
 }
 
 Node* Node::closet_preceding_node(int new_id){
-    cout<<"Inside "<<__FUNCTION__<< " for my_id " << my_id << " and looking for "<< new_id <<endl;
+    cout<<"Enter "<<__FUNCTION__<< " my_id " << my_id << " and looking for "<< new_id <<endl;
     for(int i = finger_table.size()-1;i >=0;i--){
-        //if last node lies in the range
-        //check in the round range
-        if(new_id > my_id){
-            if(finger_table[i].node > my_id && finger_table[i].node < new_id){
-                return chord_db[finger_table[i].node];
-            }
-        } else {
-            if((finger_table[i].node > my_id && finger_table[i].node < (int)pow(2, finger_table.size())) || 
-                (finger_table[i].node >=0 && finger_table[i].node < new_id) ){
-                    return chord_db[finger_table[i].node];
-                }
+        if(check_in_range(finger_table[i].node,my_id,new_id)){
+            return chord_db[finger_table[i].node];
         }
-        // if(finger_table[i].node > my_id && finger_table[i].node < new_id){
-        //     return chord_db[finger_table[i].node];
-        // }
     }
     return this;
 }
+
+//use to initialize the finger table for new joining node
 void Node::init_finger_table(Node *n1){
-    cout<<"Inside "<<__FUNCTION__<<endl;
+    cout<<"Enter: "<<__FUNCTION__ <<" my_id " <<my_id << "Doing init from " << n1->my_id<<endl;
     finger_table[0].node = n1->find_sucessor(finger_table[0].start);
     predecessor = chord_db[finger_table[0].node]->predecessor;
     chord_db[finger_table[0].node]->predecessor = this->my_id;
     for(int i=0;i<finger_table.size()-1;i++){
-        if(finger_table[i+1].start >= my_id && finger_table[i+1].start<finger_table[i].node){
+        if(check_in_range(finger_table[i+1].start, my_id, finger_table[i].node) && finger_table[i+1].node == my_id){
             finger_table[i+1].node = finger_table[i].node;
         } else {
             finger_table[i+1].node = n1->find_sucessor(finger_table[i+1].start);
@@ -95,28 +99,24 @@ void Node::init_finger_table(Node *n1){
     }
 }
 void Node::update_others(){
-    cout<<"Inside "<<__FUNCTION__<<endl;
+    cout<<"Enter: "<<__FUNCTION__<< " for my_id "<<my_id<<endl;
     for(int i=0;i<finger_table.size();i++){
-        Node *p = find_predecessor((my_id-(int)pow(2,i)));
-        cout<<"find_predecer return " << p->my_id << "for " << (my_id-(int)pow(2,i)) <<endl;
+        int change_id = my_id - (int)pow(2,i);
+        if(change_id<0){
+            change_id = (int)pow(2,finger_table.size())-change_id;
+        }
+        Node *p = find_predecessor(change_id);
+        cout<<"find_predecer return " << p->my_id << " for " << change_id << " for i: "<<i<<endl;
         p->update_finger_table(my_id,i);
     }
 }
 void Node::update_finger_table(int s,int i){
-    cout<<"Inside "<<__FUNCTION__<< " for my_id " <<my_id <<" s "<<s <<" i " <<i<<endl;
-    if(finger_table[i].node > my_id){
-        if(s >=my_id && s<finger_table[i].node){
-            finger_table[i].node =s;
-            Node *p = chord_db[predecessor];
-            p->update_finger_table(s,i);
-        }
-    } else {
-        if((s >= my_id && s < (int) pow(2,finger_table.size())) || 
-            (s>0 && s< finger_table[i].node)){
-                finger_table[i].node =s;
-                Node *p = chord_db[predecessor];
-                p->update_finger_table(s,i);
-            }
+    cout<<"Enter: "<<__FUNCTION__<< " for my_id " <<my_id <<" s:"<<s <<" i:" <<i<<endl;
+
+    if(check_in_range(s,my_id,finger_table[i].node)){
+        finger_table[i].node =s;
+        Node *p = chord_db[predecessor];
+        p->update_finger_table(s,i);
     }
     // if(s >=my_id && s<finger_table[i].node){
     //     finger_table[i].node =s;
