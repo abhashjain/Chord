@@ -25,7 +25,7 @@ class Node{
         //construtor to Node class
         Node(int finger_size);
 
-        void fix_finger(int id);
+        void fix_finger();
         int notify(int id);
         int stabilize(int id);
         int fix(int id);
@@ -39,6 +39,7 @@ class Node{
         void update_others();
         void update_finger_table(int s, int i);
         bool check_in_range(int,int,int);
+        int relativeID(int original, int local);
 };
 
 #endif

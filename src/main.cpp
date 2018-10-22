@@ -42,7 +42,13 @@ void process_command(string cmd,int n){
 			cout<<"ERROR: Node "<<fromNode <<"does not exist";
 		}
 	} else if(v[0].compare("fix")==0 && v.size()==2 && isNumber(v[1])){
-		cout<<" fixing the finger table for "<<stoi(v[1])<<endl;
+		int node_id = stoi(v[1]);
+		if(chord_db.find(node_id) != chord_db.end()){
+			chord_db[node_id]->fix_finger();	
+			cout<<" fixing the finger table for "<<stoi(v[1])<<endl;
+		} else {
+			cout<<"ERROR: Node "<< node_id <<" does not exist"<<endl;
+		}
 	} else if(v[0].compare("stab")==0 && v.size()==2 && isNumber(v[1])){
 		cout<<"stablizing the finger table for "<<stoi(v[1])<<endl;
 	} else if(v[0].compare("list")==0 && v.size()==1) {
@@ -75,6 +81,8 @@ int main(int argc, char *argv[])
             //cout<<str<<endl;
 			if(str.compare("end")==0)
 				exit(0);
+			else if(str.compare("")==0)
+				continue;
 			process_command(str,n);
         }
 
@@ -96,6 +104,8 @@ int main(int argc, char *argv[])
 			if(str.compare("end")==0){
 				in.close();
 				return 0;
+			} else if(str.compare("")==0){
+				continue;
 			}
 			process_command(str,n);
 		}
@@ -103,4 +113,3 @@ int main(int argc, char *argv[])
     }
     return 0;
 }
-
