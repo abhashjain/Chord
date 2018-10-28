@@ -40,9 +40,16 @@ int Node::find_sucessor(int new_id){
         return this->my_id;
     }
     //New node id lies between the current node id and it's suceessor
-    if(new_id > my_id && new_id <= finger_table[0].node){
+    //Check using the relative ID logic, as there is wrap around of node possible
+    int find_relative_id = relativeID(new_id,my_id);
+    int successor_relative_id = relativeID(finger_table[0].node,my_id);
+    if(find_relative_id > 0 && find_relative_id <= successor_relative_id){
         return SUCCESSOR;
-    } //When Successor is 0 then I handled it differently
+    }
+    /* if(new_id > my_id && new_id <= finger_table[0].node){
+        return SUCCESSOR;
+    } */
+     //When Successor is 0 then I handled it differently
     else if ((finger_table[0].node == 0) && (new_id > my_id && new_id <= (int)pow(2,finger_table.size()))){
         return SUCCESSOR;
     }
@@ -190,7 +197,7 @@ void Node::join_node(Node *n1){
 
 //Function to fix the finger table entry for this node
 void Node::fix_finger(){
-	for(int i=0;i<finger_table.size();i++){
+	for(int i=1;i<finger_table.size();i++){
 		finger_table[i].node = find_sucessor(finger_table[i].start);
 	}
 }
