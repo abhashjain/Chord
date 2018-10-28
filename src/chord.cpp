@@ -38,3 +38,8 @@ void Chord::add_node(int id,int finger_size){
     chord_db[id] = newNode;
 }
 
+void Chord::drop_node(int id){
+    Node *n = chord_db[id];
+    delete n;
+    chord_db.erase(id);
+}

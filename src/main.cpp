@@ -31,7 +31,14 @@ void process_command(string cmd,int n){
 		cout<<"adding the element" << stoi(v[1])<<endl;
 		cd.get()->add_node(new_id,n);
 	} else if(v[0].compare("drop")==0 && v.size()==2 && isNumber(v[1])){
-		cout<<"Dropping the elmenent"<<stoi(v[1])<<endl;
+		int node_id = stoi(v[1]);
+		if(chord_db.find(node_id) != chord_db.end()){
+			cout<<"Dropping the elmenent"<<node_id<<endl;
+			unique_ptr<Chord> cd = make_unique<Chord>();
+			cd.get()->drop_node(node_id);
+		} else {
+			cout<<"ERROR: Node "<< node_id <<" does not exist"<<endl;
+		}
 	} else if(v[0].compare("join")==0 && v.size()==3 && isNumber(v[1]) && isNumber(v[2])){
 		int fromNode = stoi(v[1]);
 		int toNode = stoi(v[2]);
@@ -50,7 +57,13 @@ void process_command(string cmd,int n){
 			cout<<"ERROR: Node "<< node_id <<" does not exist"<<endl;
 		}
 	} else if(v[0].compare("stab")==0 && v.size()==2 && isNumber(v[1])){
-		cout<<"stablizing the finger table for "<<stoi(v[1])<<endl;
+		int node_id = stoi(v[1]);
+		if(chord_db.find(node_id) != chord_db.end()){
+			cout<<" stablizing the finger table for "<<stoi(v[1])<<endl;
+			chord_db[node_id]->stabilize();
+		} else {
+			cout<<"ERROR: Node "<< node_id <<" does not exist"<<endl;
+		}
 	} else if(v[0].compare("list")==0 && v.size()==1) {
 		cout<<"going to list this node \n";
 		unique_ptr<Chord> cd = make_unique<Chord>();

@@ -2,6 +2,7 @@
 #define SUCCESSOR finger_table[0].node; 
 
 extern map<int,Node *> chord_db;
+
 Node::Node(int finger_size){
     for(int i=0;i<finger_size;i++){
         struct finger_node temp = {0,0,0};
@@ -200,4 +201,35 @@ void Node::fix_finger(){
 	for(int i=1;i<finger_table.size();i++){
 		finger_table[i].node = find_sucessor(finger_table[i].start);
 	}
+}
+
+void Node::notify(Node *n1){
+    int relative_my_id = relativeID(n1->my_id,predecessor);
+    int my_relative_id = relativeID(my_id, predecessor);
+    if (predecessor == -1 || (relative_my_id > 0 && relative_my_id < my_relative_id)){
+        predecessor = n1->my_id;
+    }
+}
+
+void Node::stabilize(){
+    Node* x = NULL;
+    if(chord_db.find(finger_table[0].node)!= chord_db.end()){
+        x = chord_db[chord_db[finger_table[0].node]->predecessor];
+    } else {  //node got fail
+        int i = 1;
+        while(i < finger_table.size()){
+            if(chord_db.find(finger_table[i].node)!= chord_db.end()){
+               x = chord_db[chord_db[finger_table[i].node]->predecessor];
+               finger_table[0].node = x->my_id;
+               break; 
+            }
+            i++;
+        }
+    }
+    int relative_my_id = relativeID(x->my_id,my_id);
+    int my_relative_id = relativeID(finger_table[0].node, my_id);
+    if(relative_my_id>0 && relative_my_id < my_relative_id){
+        finger_table[0].node = x->my_id;
+    }
+    chord_db[finger_table[0].node]->notify(chord_db[my_id]);
 }
