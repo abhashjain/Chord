@@ -1,0 +1,23 @@
+#!/bin/bash
+#############################
+#
+# Author : Abhash Jain (ajain28)
+# CSC591 : HW2 Chord Execution File
+#
+#############################
+[ $# -ne 3 ] && { echo "Usage: $0 <number of nodes> -i [Input file]"; exit 1; }
+
+if [ $1 == "-i" ]
+then
+fileName=$2
+n=$3
+elif [ $2 == "-i" ]
+then
+fileName=$3
+n=$1
+else
+echo "-i option is not specified: chord -i <input file name> <number of node> "
+exit
+fi
+
+./chord_main $n $fileName
