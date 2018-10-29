@@ -219,9 +219,10 @@ void Node::stabilize(){
         int i = 1;
         while(i < finger_table.size()){
             if(chord_db.find(finger_table[i].node)!= chord_db.end()){
-               x = chord_db[chord_db[finger_table[i].node]->predecessor];
+               x = chord_db[finger_table[i].node];
                finger_table[0].node = x->my_id;
-               break; 
+               predecessor = -1;
+               break;
             }
             i++;
         }
