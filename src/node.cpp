@@ -32,7 +32,9 @@ void Node::show_node(){
 
 //Find the successor of Given Node
 int Node::find_sucessor(int new_id){
+    #ifdef DEBUG_ENABLE
     cout<<"Inside "<<__FUNCTION__<<" for my_id " << my_id << " and looking for "<< new_id <<endl;
+    #endif
     if(my_id == new_id){
         return this->my_id;
     }
@@ -61,7 +63,9 @@ int Node::find_sucessor(int new_id){
 }
 //this function check for round range excluding boundary
 bool Node::check_in_range(int id,int start,int end){
+    #ifdef DEBUG_ENABLE
     cout<<"Enter "<<__FUNCTION__<< ":my id " <<my_id << " id "<< id << " start " <<start <<" end " << end << endl;
+    #endif
     if(end>start){  //increasing range
         if(id>start && id<end){ //Id will be in id E (start,end)
             return true;
@@ -75,7 +79,9 @@ bool Node::check_in_range(int id,int start,int end){
 }
 
 Node* Node::find_predecessor(int new_id){
+    #ifdef DEBUG_ENABLE
     cout<<"Enter: "<<__FUNCTION__ << " predecessor for "<<new_id <<" myid is "<< my_id <<endl;
+    #endif
     Node* n1 = this;
     int pre = n1->my_id;
     int find_relative_id = relativeID(new_id,n1->my_id);
@@ -83,7 +89,9 @@ Node* Node::find_predecessor(int new_id){
     while(!(find_relative_id > 0 && find_relative_id <= successor_relative_id)){
         pre = n1->my_id;
         n1 = n1->closet_preceding_node(new_id);
+        #ifdef DEBUG_ENABLE
         cout<< __FUNCTION__ << ": closet procedeing return " << n1->my_id << " for new_id "<<new_id << " at "<< my_id <<endl;
+        #endif
         if(pre == n1->my_id){
             break;
         }
@@ -102,7 +110,9 @@ Node* Node::find_predecessor(int new_id){
 }
 
 Node* Node::closet_preceding_node(int new_id){
+    #ifdef DEBUG_ENABLE
     cout<<"Enter "<<__FUNCTION__<< " my_id " << my_id << " and looking for "<< new_id <<endl;
+    #endif
     int find_id_relative = relativeID(new_id,this->my_id);
     for(int i = finger_table.size()-1;i >=0;i--){
         int ith_id_relative = relativeID(finger_table[i].node,this->my_id);
@@ -118,7 +128,9 @@ Node* Node::closet_preceding_node(int new_id){
 
 //use to initialize the finger table for new joining node
 void Node::init_finger_table(Node *n1){
+    #ifdef DEBUG_ENABLE
     cout<<"Enter: "<<__FUNCTION__ <<" my_id " <<my_id << " doing init from " << n1->my_id<<endl;
+    #endif
     finger_table[0].node = n1->find_sucessor(finger_table[0].start);
     //set my predecessor to sucessor predessor and sucessor predecessor will be current node
     //Like: inserting in between
@@ -141,20 +153,28 @@ void Node::init_finger_table(Node *n1){
     }
 }
 void Node::update_others(){
+    #ifdef DEBUG_ENABLE
     cout<<"Enter: "<<__FUNCTION__<< " for my_id "<<my_id<<endl;
+    #endif
     for(int i=0;i<finger_table.size();i++){
         int change_id = my_id - (int)pow(2,i);
         if(change_id<0){
+            #ifdef DEBUG_ENABLE
             cout<<"Abhash: "<<change_id<<endl;
+            #endif
             change_id = (int)pow(2,finger_table.size())+change_id;
         }
         Node *p = find_predecessor(change_id);
+        #ifdef DEBUG_ENABLE
         cout<<"find_predecer return " << p->my_id << " for " << change_id << " for i: "<<i<<endl;
+        #endif
         p->update_finger_table(my_id,i);
     }
 }
 void Node::update_finger_table(int s,int i){
+    #ifdef DEBUG_ENABLE
     cout<<"Enter: "<<__FUNCTION__<< " for my_id " <<my_id <<" s:"<<s <<" i:" <<i<<endl;
+    #endif
     /* if(my_id==s){
         return;
     } */
@@ -167,7 +187,9 @@ void Node::update_finger_table(int s,int i){
         p->update_finger_table(s,i);
     } */
     if(check_in_range(s,my_id,finger_table[i].node)){
+        #ifdef DEBUG_ENABLE
         cout<< "Changed the entry for " << my_id << " index: "<<i  << " from " <<finger_table[i].node << " to "<<s<<endl;
+        #endif
         finger_table[i].node =s;
         Node *p = chord_db[predecessor];
         p->update_finger_table(s,i);
@@ -183,9 +205,13 @@ void Node::join_node(Node *n1){
     //predecessor = -1;
     //finger_table[0].node = 0;
     if(n1){
+        #ifdef DEBUG_ENABLE
         cout<<"join node\n";
+        #endif
         init_finger_table(n1);
+        #ifdef DEBUG_ENABLE
         show_node();
+        #endif
         update_others();
     } else {
         for(int i=0;i<finger_table.size();i++){
