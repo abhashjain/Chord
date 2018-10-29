@@ -1,3 +1,8 @@
+/*
+*
+* Author : Abhash Jain (ajain28) - CSC591 - HW2
+* chord.h: Chord Header file
+*/
 #ifndef _Chord
 #define _Chord
 

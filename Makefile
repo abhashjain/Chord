@@ -1,3 +1,9 @@
+#
+#
+# Author : Abhash Jain (ajain28) - CSC591 - HW2
+# Make File to build the Project
+# debug image option is also available Do: make debug for debug messages
+#
 CXX=g++
 CFLAGS=-c -Wall -g -std=c++17
 LDFLAGS=-lm

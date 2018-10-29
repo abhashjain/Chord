@@ -1,3 +1,9 @@
+/*
+*
+* Author : Abhash Jain (ajain28) - CSC591 - HW2
+* Node.h: Node Header File
+*
+*/
 #ifndef _Node
 #define _Node
 

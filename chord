@@ -2,7 +2,7 @@
 #############################
 #
 # Author : Abhash Jain (ajain28)
-# CSC591 : HW2 Chord Execution File
+# CSC591 : HW2 Chord Execution File- Script
 #
 #############################
 [ $# -ne 3 ] && { echo "Usage: $0 <number of nodes> -i [Input file]"; exit 1; }

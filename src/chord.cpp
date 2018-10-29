@@ -1,3 +1,9 @@
+/*
+*
+* Author : Abhash Jain (ajain28) - CSC591 - HW2
+* chord.cpp: Constitute a ring - class file for Chord
+*
+*/
 #include "chord.h"
 #include "utils.h"
 

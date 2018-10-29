@@ -1,4 +1,9 @@
-
+/*
+*
+* Author : Abhash Jain (ajain28) - CSC591 - HW2
+* Main Program file to run Chord Simulation
+*
+*/
 #include "node.h"
 #include "chord.h"
 #include<sstream>

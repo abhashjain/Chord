@@ -1,3 +1,9 @@
+/*
+*
+* Author : Abhash Jain (ajain28) - CSC591 - HW2
+* Node.cpp: Node Class file - constitute node in a chord ring
+*
+*/
 #include "node.h"
 #define SUCCESSOR finger_table[0].node; 
 
