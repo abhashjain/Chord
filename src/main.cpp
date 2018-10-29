@@ -16,7 +16,7 @@ using namespace std;
 extern map<int,Node *> chord_db;
 int total_possible_nodes;
 bool isNumber(string str){
-	for(int i=0;i<str.length();i++){
+	for(std::string::size_type i=0;i<str.length();i++){
 		if(!isdigit(str[i])){
 			return false;
 		}

@@ -143,7 +143,7 @@ void Node::init_finger_table(Node *n1){
     predecessor = chord_db[finger_table[0].node]->predecessor;
     chord_db[finger_table[0].node]->predecessor = this->my_id;
 
-    for(int i=0;i<finger_table.size()-1;i++){
+    for(unsigned int i=0;i<finger_table.size()-1;i++){
         /* int next_relative_id = relativeID(finger_table[i+1].start,my_id);
         int current_relative_id = relativeID(finger_table[i].node,my_id);
         if(next_relative_id >=0 && next_relative_id < current_relative_id){
@@ -162,7 +162,7 @@ void Node::update_others(){
     #ifdef DEBUG_ENABLE
     cout<<"Enter: "<<__FUNCTION__<< " for my_id "<<my_id<<endl;
     #endif
-    for(int i=0;i<finger_table.size();i++){
+    for(unsigned int i=0;i<finger_table.size();i++){
         int change_id = my_id - (int)pow(2,i);
         if(change_id<0){
             #ifdef DEBUG_ENABLE
@@ -220,7 +220,7 @@ void Node::join_node(Node *n1){
         #endif
         update_others();
     } else {
-        for(int i=0;i<finger_table.size();i++){
+        for(unsigned int i=0;i<finger_table.size();i++){
             finger_table[i].node = my_id;
         }
         predecessor = my_id;
@@ -230,7 +230,7 @@ void Node::join_node(Node *n1){
 
 //Function to fix the finger table entry for this node
 void Node::fix_finger(){
-	for(int i=1;i<finger_table.size();i++){
+	for(unsigned int i=1;i<finger_table.size();i++){
 		finger_table[i].node = find_sucessor(finger_table[i].start);
 	}
 }
@@ -248,7 +248,7 @@ void Node::stabilize(){
     if(chord_db.find(finger_table[0].node)!= chord_db.end()){
         x = chord_db[chord_db[finger_table[0].node]->predecessor];
     } else {  //node got fail
-        int i = 1;
+        unsigned int i = 1;
         while(i < finger_table.size()){
             if(chord_db.find(finger_table[i].node)!= chord_db.end()){
                x = chord_db[finger_table[i].node];
