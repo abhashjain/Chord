@@ -33,7 +33,10 @@ int Node:: relativeID(int universal, int local){
     return ret;
 }
 void Node::show_node(){
-    cout<< "Node "<< my_id << ": suc "<<finger_table[0].node << ", pre " << (predecessor != -1 ? to_string(predecessor): "None") << ": finger " <<print_finger() <<endl;
+    if(isJoined)
+        cout<< "Node "<< my_id << ": suc "<<finger_table[0].node << ", pre " << (predecessor != -1 ? to_string(predecessor): "None") << ": finger " <<print_finger() <<endl;
+    else 
+        cout<< "Error: Node is not joined\n"<<endl;
 }
 
 //Find the successor of Given Node
@@ -92,6 +95,9 @@ Node* Node::find_predecessor(int new_id){
     int pre = n1->my_id;
     int find_relative_id = relativeID(new_id,n1->my_id);
     int successor_relative_id = relativeID(finger_table[0].node,n1->my_id);
+    if(new_id-1 == my_id){
+        return chord_db[my_id];
+    }
     while(!(find_relative_id > 0 && find_relative_id <= successor_relative_id)){
         pre = n1->my_id;
         n1 = n1->closet_preceding_node(new_id);
@@ -219,6 +225,7 @@ void Node::join_node(Node *n1){
         show_node();
         #endif
         update_others();
+        isJoined = true;
     } else {
         for(unsigned int i=0;i<finger_table.size();i++){
             finger_table[i].node = my_id;

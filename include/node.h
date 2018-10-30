@@ -26,6 +26,7 @@ class Node{
     public:
         vector<finger_node> finger_table;
         int predecessor;
+        bool isJoined;
         //int successor;
         int my_id;
         //construtor to Node class

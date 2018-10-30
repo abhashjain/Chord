@@ -12,7 +12,12 @@
 void Chord::list_nodes(){
     vector<int> final_node_list;
     for(auto n: chord_db){
-        final_node_list.push_back(n.first);
+        if(n.second->isJoined){
+            final_node_list.push_back(n.first);
+            //#ifdef DEBUG_ENABLE
+            n.second->show_node();
+            //#endif
+        }
     }
     sort(final_node_list.begin(),final_node_list.end());
     auto print = [](const int &n) {cout<<n<<"\t";};
@@ -41,6 +46,9 @@ void Chord::add_node(int id,int finger_size){
     }
     newNode->finger_table[finger_size-1].interval = newNode->my_id;
     newNode->predecessor = id;
+    if(chord_db.size()==0){
+        newNode->isJoined =true;
+    }
     chord_db[id] = newNode;
 }
 
