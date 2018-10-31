@@ -1,0 +1,23 @@
+Added node 1
+Added node 12
+Added node 21
+Node 1: suc 12, pre 21: finger 12,12,12,12,21
+Node 12: suc 21, pre 1: finger 21,21,21,21,1
+Node 21: suc 1, pre 12: finger 1,1,1,1,12
+1	12	21	
+ERROR: Node 31 does not exist
+Node 1: suc 12, pre 21: finger 12,12,12,12,21
+Node 12: suc 21, pre 1: finger 21,21,21,21,1
+Node 21: suc 1, pre 12: finger 1,1,1,1,12
+1	12	21	
+Added node 3
+Node 1: suc 12, pre 21: finger 12,12,12,12,21
+Node 3: suc 12, pre 3: finger 12,12,12,12,21
+Node 12: suc 21, pre 3: finger 21,21,21,21,1
+Node 21: suc 1, pre 12: finger 1,1,1,1,12
+1	3	12	21	
+Node 1: suc 12, pre 21: finger 12,12,12,12,21
+Node 3: suc 12, pre 3: finger 12,12,12,12,21
+Node 12: suc 21, pre 3: finger 21,21,21,21,1
+Node 21: suc 1, pre 12: finger 1,1,1,1,12
+1	3	12	21	

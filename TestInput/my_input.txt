@@ -1,0 +1,29 @@
+add 1
+add 12
+join 12 1
+add 21
+join 21 1
+stab 1
+stab 12
+stab 21
+list
+show 31
+fix 1
+fix 12
+fix 21
+list
+add 3
+join 3 12
+join 3 1
+stab 3
+fix 3
+fix 1
+fix 12
+fix 21
+list
+stab 21
+stab 12
+fix 12
+fix 21
+list
+end

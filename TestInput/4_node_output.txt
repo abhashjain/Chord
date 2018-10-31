@@ -1,0 +1,25 @@
+Added node 1
+Added node 12
+ERROR: node id must be in [0,16)
+ERROR: node id must be in [0,16)
+ERROR: node id must be in [0,16)
+Node 1: suc 12, pre 12: finger 12,12,12,12
+Node 12: suc 1, pre 1: finger 1,1,1,1
+1	12	
+ERROR: node id must be in [0,16)
+ERROR: node id must be in [0,16)
+Node 1: suc 12, pre 12: finger 12,12,12,12
+Node 12: suc 1, pre 1: finger 1,1,1,12
+1	12	
+Added node 3
+ERROR: node id must be in [0,16)
+Node 1: suc 3, pre 12: finger 3,3,12,12
+Node 3: suc 12, pre 3: finger 12,12,12,12
+Node 12: suc 1, pre 3: finger 1,1,1,12
+1	3	12	
+ERROR: node id must be in [0,16)
+ERROR: node id must be in [0,16)
+Node 1: suc 3, pre 12: finger 3,3,12,12
+Node 3: suc 12, pre 3: finger 12,12,12,12
+Node 12: suc 1, pre 3: finger 1,1,1,12
+1	3	12	
