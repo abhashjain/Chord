@@ -35,7 +35,7 @@ void Chord::show_id(int id){
         }
         chord_db[id]->show_node();
     } else {
-        cout<<"ERROR: Node "<< id << "does not exist\n";
+        cout<<"ERROR: Node "<< id << " does not exist\n";
     }
 }
 

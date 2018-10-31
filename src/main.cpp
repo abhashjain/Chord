@@ -108,6 +108,10 @@ void process_command(string cmd,int n){
         		cout<<"ERROR: Node "<< toNode << "does not exist\n";
         		return;
     		}
+			if(!chord_db[toNode]->isJoined){
+				cout<< "ERROR: Node " << toNode << " is not joined\n";
+				return;
+			}
 			chord_db[fromNode]->join_node(chord_db[toNode]);
 		}else {
 			cout<<"ERROR: Node "<<fromNode <<" does not exist" <<endl;
