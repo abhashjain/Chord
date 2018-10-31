@@ -56,6 +56,7 @@ void Chord::add_node(int id,int finger_size){
     }
     newNode->finger_table[finger_size-1].interval = newNode->my_id;
     newNode->predecessor = id;
+    newNode->isJoined = false;
     if(chord_db.size()==0){
         newNode->isJoined =true;
     }
