@@ -14,9 +14,9 @@ void Chord::list_nodes(){
     for(auto n: chord_db){
         if(n.second != NULL && n.second->isJoined){
             final_node_list.push_back(n.first);
-            //#ifdef DEBUG_ENABLE
+            #ifdef DEBUG_ENABLE
             n.second->show_node();
-            //#endif
+            #endif
         }
     }
     sort(final_node_list.begin(),final_node_list.end());

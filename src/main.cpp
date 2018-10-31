@@ -114,7 +114,7 @@ void process_command(string cmd,int n){
 			}
 			chord_db[fromNode]->join_node(chord_db[toNode]);
 		}else {
-			cout<<"ERROR: Node "<<fromNode <<" does not exist" <<endl;
+			cout<<"ERROR: Node does not exist" <<endl;
 		}
 	} else if(v[0].compare("fix")==0 && v.size()==2 && isNumber(v[1])){
 		if(v.size()!=2){
