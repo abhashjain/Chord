@@ -12,7 +12,7 @@
 void Chord::list_nodes(){
     vector<int> final_node_list;
     for(auto n: chord_db){
-        if(n.second->isJoined){
+        if(n.second != NULL && n.second->isJoined){
             final_node_list.push_back(n.first);
             //#ifdef DEBUG_ENABLE
             n.second->show_node();
@@ -27,6 +27,12 @@ void Chord::list_nodes(){
 
 void Chord::show_id(int id){
     if(chord_db.find(id)!=chord_db.end()){
+        if(chord_db[id]==NULL){
+            //Cleanup if the node somehow still there and null
+            chord_db.erase(id);
+            cout<<"ERROR: Node "<< id <<" does not exist\n";
+            return;
+        }
         chord_db[id]->show_node();
     } else {
         cout<<"ERROR: Node "<< id << "does not exist\n";
@@ -35,6 +41,10 @@ void Chord::show_id(int id){
 
 //Fork a new Node and add it to our DB
 void Chord::add_node(int id,int finger_size){
+    if(chord_db[id]==NULL){
+        //Cleanup from poising of Node
+        chord_db.erase(id);
+    }
     Node *newNode = new Node(finger_size);
     newNode->my_id = id;
     for(int i=0;i<finger_size;i++){
@@ -53,6 +63,12 @@ void Chord::add_node(int id,int finger_size){
 }
 
 void Chord::drop_node(int id){
+    if(chord_db[id]==NULL){
+        //Cleanup from poising of Node
+        chord_db.erase(id);
+        cout<<"ERROR: Node "<< id << "does not exist\n";
+        return;
+    }
     Node *n = chord_db[id];
     chord_db[n->finger_table[0].node]->predecessor = n->predecessor;
     chord_db[n->predecessor]->finger_table[0].node = n->finger_table[0].node;

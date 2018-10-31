@@ -96,6 +96,18 @@ void process_command(string cmd,int n){
 		cout<<"Joining Node from "<< stoi(v[1]) <<" to "<<stoi(v[2])<<endl;
 		#endif
 		if(chord_db.find(fromNode)!=chord_db.end() && chord_db.find(toNode)!=chord_db.end()){
+			if(chord_db[fromNode]==NULL){
+        		//Cleanup from poising of Node
+        		chord_db.erase(fromNode);
+        		cout<<"ERROR: Node "<< fromNode << "does not exist\n";
+        		return;
+    		}
+			if(chord_db[toNode]==NULL){
+        		//Cleanup from poising of Node
+        		chord_db.erase(toNode);
+        		cout<<"ERROR: Node "<< toNode << "does not exist\n";
+        		return;
+    		}
 			chord_db[fromNode]->join_node(chord_db[toNode]);
 		}else {
 			cout<<"ERROR: Node "<<fromNode <<" does not exist" <<endl;
@@ -114,6 +126,12 @@ void process_command(string cmd,int n){
 			return;
 		}
 		if(chord_db.find(node_id) != chord_db.end()){
+			if(chord_db[node_id]==NULL){
+        		//Cleanup from poising of Node
+        		chord_db.erase(node_id);
+        		cout<<"ERROR: Node "<< node_id << "does not exist\n";
+        		return;
+    		}
 			chord_db[node_id]->fix_finger();	
 			#ifdef DEBUG_ENABLE
 			cout<<" fixing the finger table for "<<stoi(v[1])<<endl;
@@ -138,6 +156,12 @@ void process_command(string cmd,int n){
 			#ifdef DEBUG_ENABLE
 			cout<<" stablizing the finger table for "<<stoi(v[1])<<endl;
 			#endif
+			if(chord_db[node_id]==NULL){
+        		//Cleanup from poising of Node
+        		chord_db.erase(node_id);
+        		cout<<"ERROR: Node "<< node_id << "does not exist\n";
+        		return;
+    		}
 			chord_db[node_id]->stabilize();
 		} else {
 			cout<<"ERROR: Node "<< node_id <<" does not exist"<<endl;
@@ -169,6 +193,12 @@ void process_command(string cmd,int n){
 			return;
 		}
 		if(chord_db.find(node_id)!=chord_db.end()){
+			if(chord_db[node_id]==NULL){
+        		//Cleanup from poising of Node
+        		chord_db.erase(node_id);
+        		cout<<"ERROR: Node "<< node_id << "does not exist\n";
+        		return;
+    		}
 			chord_db[node_id]->show_node();
 		}else {
 			cout<<"ERROR: Node "<< node_id <<" does not exist"<<endl;

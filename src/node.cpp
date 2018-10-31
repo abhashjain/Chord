@@ -67,6 +67,13 @@ int Node::find_sucessor(int new_id){
     }
     else { //find next preding node to the new_id and return it's successor
         Node *n0 = chord_db[finger_table[0].node]->closet_preceding_node(new_id);
+        if(n0==NULL){
+            //if next node is also deleted
+            #ifdef DEBUG_ENABLE
+            cout<<"**## Got sucessor NULL\n";
+            #endif
+            return my_id;
+        }
         return n0->find_sucessor(new_id);
     }
 }
