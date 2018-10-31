@@ -20,8 +20,19 @@ void Chord::list_nodes(){
         }
     }
     sort(final_node_list.begin(),final_node_list.end());
-    auto print = [](const int &n) {cout<<n<<"\t";};
-    std::for_each(final_node_list.begin(),final_node_list.end(),print);
+    if(final_node_list.size()!=0)
+        cout<<"Nodes: ";
+    else
+        cout<<"Empty Node list!";
+    //auto print = [](const int &n) {cout<<n<<", ";};
+    //std::for_each(final_node_list.begin(),final_node_list.end(),print);
+    for(unsigned int i=0;i<final_node_list.size();i++){
+        if(i==final_node_list.size()-1){
+            cout<<final_node_list[i];
+        } else {
+            cout<<final_node_list[i]<<", ";
+        }
+    }
     cout<<endl;
 }
 
