@@ -225,6 +225,10 @@ int main(int argc, char *argv[])
 			return 0;
 		}
         n = atoi(argv[1]);
+		if(n==0){
+			cout<<"ERROR: Ring size show be greater than 0\n";
+			return 0;
+		}
 		total_possible_nodes = pow(2,n);
         string str;
         while(getline(cin,str)){
@@ -247,6 +251,10 @@ int main(int argc, char *argv[])
 			return 0;
 		}
         n = atoi(argv[1]);
+		if(n==0){
+			cout<<"ERROR: Ring size show be greater than 0\n";
+			return 0;
+		}
 		total_possible_nodes = pow(2,n);
         char *fileName = argv[2];
  		ifstream in;
