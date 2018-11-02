@@ -21,6 +21,10 @@ DEBUG_EXE=./debug_chord
 .PHONY: all bin clean debug dclean
 
 all: bin
+	chmod 777 chord
+	sudo cp -pf chord /usr/bin/chord
+	sudo cp -pf chord_main /usr/bin/chord_main
+
 bin: $(CHORD_EXECUTABLE)
 
 $(CHORD_EXECUTABLE): $(OBJECTS) 
